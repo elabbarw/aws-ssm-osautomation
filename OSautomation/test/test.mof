@@ -1,10 +1,5 @@
 Configuration Genesis
 {
-        param
-    (
-        [Parameter(Mandatory = $false)]
-        $testvalue
-    )
 
     ### Import the necessary modules
     Import-DscResource -Module PsDesiredStateConfiguration
