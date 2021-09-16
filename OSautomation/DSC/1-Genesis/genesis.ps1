@@ -1,9 +1,9 @@
 Configuration Genesis
 {
     ### AD Credentials from AWS SSM Parameters ###
-    $domain = (Get-SSMParameterValue -Name domainName).Parameters[0].Value
-    $username = (Get-SSMParameterValue -Name domainJoinUserName).Parameters[0].Value
-    $password = (Get-SSMParameterValue -Name domainJoinPassword -WithDecryption $True).Parameters[0].Value | ConvertTo-SecureString -asPlainText -Force
+    $domain = "{ssmtag:domainname}"
+    $username = "{ssmtag:domainusername}"
+    $password = "{ssmtag:domainpassword}"
     $credential = New-Object System.Management.Automation.PSCredential($username,$password)
     ### Import the necessary modules
     Import-DscResource -Module PsDesiredStateConfiguration
@@ -13,9 +13,9 @@ Configuration Genesis
     {
         ### Join the domain with the name taken from the Name tag and set the description of the VM to match the Purpose tag
         Computer RenameAndJoin {
-            Name = '{tag:Name}'
+            Name = '{ssmtag:Name}'
             DomainName = $domain
-            Description = '{tag:Purpose}'
+            Description = '{ssmtag:Purpose}'
             Credential = $credential
         }
         PendingReboot RebootAfterDomainJoin
@@ -34,3 +34,4 @@ Configuration Genesis
 
 
 }
+Genesis

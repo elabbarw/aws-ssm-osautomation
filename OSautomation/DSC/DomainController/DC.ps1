@@ -1,9 +1,9 @@
 Configuration DomainController
 {
     ### AD Credentials from AWS SSM Parameters ###
-    $domain = (Get-SSMParameterValue -Name domainName).Parameters[0].Value
-    $username = (Get-SSMParameterValue -Name domainJoinUserName).Parameters[0].Value
-    $password = (Get-SSMParameterValue -Name domainJoinPassword -WithDecryption $True).Parameters[0].Value | ConvertTo-SecureString -asPlainText -Force
+    $domain = "{ssmtag:domainname}"
+    $username = "{ssmtag:domainusername}"
+    $password = "{ssmtag:domainpassword}"
     $credential = New-Object System.Management.Automation.PSCredential($username,$password)
 
     ### Import the necessary modules
@@ -46,5 +46,7 @@ Configuration DomainController
     }
 
     }
+
+    DomainController
 
     
