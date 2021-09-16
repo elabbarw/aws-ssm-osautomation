@@ -4,10 +4,11 @@ Configuration Genesis
     ### Import the necessary modules
     Import-DscResource -Module PsDesiredStateConfiguration
     Import-DscResource -ModuleName ComputerManagementDsc -ModuleVersion 8.5.0
-    $testvalue = "{tagssm:TESTDCPWD}"
+    
 
     Node localhost
     {
+        $testvalue = "{tagssm:TESTDCPWD}"
         ### Join the domain with the name taken from the Name tag and set the description of the VM to match the Purpose tag
         Computer Rename {
             Name = '{tagssm:Name}'
