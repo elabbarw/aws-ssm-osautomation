@@ -1,18 +1,17 @@
 Configuration Genesis
 {
 
-    $testvalue = (Get-SSMParameterValue -Name TESTDCPWD).Parameters[0].Value
-
     ### Import the necessary modules
     Import-DscResource -Module PsDesiredStateConfiguration
     Import-DscResource -ModuleName ComputerManagementDsc -ModuleVersion 8.5.0
+    $testvalue = "{tagssm:TESTDCPWD}"
 
     Node localhost
     {
         ### Join the domain with the name taken from the Name tag and set the description of the VM to match the Purpose tag
         Computer Rename {
-            Name = '{tag:Name}'
-            Description = '{tag:Purpose}'
+            Name = '{tagssm:Name}'
+            Description = '{tagssm:Purpose}'
         }
         ### Set system locale
         SystemLocale SetLocale {
