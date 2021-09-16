@@ -1,0 +1,36 @@
+Configuration Genesis
+{
+    ### AD Credentials from AWS SSM Parameters ###
+    $domain = (Get-SSMParameterValue -Name domainName).Parameters[0].Value
+    $username = (Get-SSMParameterValue -Name domainJoinUserName).Parameters[0].Value
+    $password = (Get-SSMParameterValue -Name domainJoinPassword -WithDecryption $True).Parameters[0].Value | ConvertTo-SecureString -asPlainText -Force
+    $credential = New-Object System.Management.Automation.PSCredential($username,$password)
+    ### Import the necessary modules
+    Import-DscResource -Module PsDesiredStateConfiguration
+    Import-DscResource -ModuleName ComputerManagementDsc -ModuleVersion 8.5.0
+
+    Node localhost
+    {
+        ### Join the domain with the name taken from the Name tag and set the description of the VM to match the Purpose tag
+        Computer RenameAndJoin {
+            Name = '{tag:Name}'
+            DomainName = $domain
+            Description = '{tag:Purpose}'
+            Credential = $credential
+        }
+        PendingReboot RebootAfterDomainJoin
+        {
+            Name = 'DomainJoin'
+        }
+        ### Set system locale
+        SystemLocale SetLocale {
+            IsSingleInstance = 'Yes'
+            SystemLocale     = 'en-GB'
+        }
+
+
+
+    }
+
+
+}
