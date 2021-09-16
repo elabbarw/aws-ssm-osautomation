@@ -1,10 +1,11 @@
+
 Configuration Genesis
 {
     ### AD Credentials from AWS SSM Parameters ###
     $domain = "{ssmtag:domainname}"
     $username = "{ssmtag:domainusername}"
-    $password = "{ssmtag:domainpassword}"
-    $credential = New-Object System.Management.Automation.PSCredential($username,$password)
+    $password = "{ssmtag:domainpassword}" | ConvertTo-SecureString -AsPlainText -Force
+    $credential = New-Object PSCredential($username, $password)
     ### Import the necessary modules
     Import-DscResource -Module PsDesiredStateConfiguration
     Import-DscResource -ModuleName ComputerManagementDsc -ModuleVersion 8.5.0
@@ -34,4 +35,17 @@ Configuration Genesis
 
 
 }
-Genesis
+
+$cd = @{
+    AllNodes = @(
+        @{
+            NodeName = 'localhost'
+            PSDscAllowPlainTextPassword = $true
+            PSDscAllowDomainUser = $true
+        }
+    )
+}
+
+
+
+Genesis -ConfigurationData $cd

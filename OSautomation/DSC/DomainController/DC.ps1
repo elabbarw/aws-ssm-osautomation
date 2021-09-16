@@ -3,8 +3,8 @@ Configuration DomainController
     ### AD Credentials from AWS SSM Parameters ###
     $domain = "{ssmtag:domainname}"
     $username = "{ssmtag:domainusername}"
-    $password = "{ssmtag:domainpassword}"
-    $credential = New-Object System.Management.Automation.PSCredential($username,$password)
+    $password = "{ssmtag:domainpassword}" | ConvertTo-SecureString -AsPlainText -Force
+    $credential = New-Object PSCredential($username, $password)
 
     ### Import the necessary modules
     Import-DscResource -ModuleName PsDesiredStateConfiguration
@@ -47,6 +47,17 @@ Configuration DomainController
 
     }
 
-    DomainController
+    $cd = @{
+    AllNodes = @(
+        @{
+            NodeName = 'localhost'
+            PSDscAllowPlainTextPassword = $true
+            PSDscAllowDomainUser = $true
+        }
+    )
+}
+
+
+DomainController -ConfigurationData $cd
 
     
