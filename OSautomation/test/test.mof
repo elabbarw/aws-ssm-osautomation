@@ -3,7 +3,7 @@ Configuration Genesis
 
     ### Import the necessary modules
     Import-DscResource -Module PsDesiredStateConfiguration
-    Import-DscResource -ModuleName ComputerManagementDsc
+    Import-DscResource -Module ComputerManagementDsc
 
     Node localhost
     {
@@ -26,3 +26,5 @@ Configuration Genesis
 
 
 }
+
+Genesis
