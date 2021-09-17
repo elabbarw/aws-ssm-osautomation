@@ -1,11 +1,6 @@
 
-Configuration Genesis
+Configuration Genesis_newForest
 {
-    ### AD Credentials from AWS SSM Parameters ###
-    $domain = "{ssmtag:domainName}"
-    $username = "{ssmtag:domainJoinUsername}"
-    $password = "{ssmtag:domainJoinPassword}" | ConvertTo-SecureString -AsPlainText -Force
-    $credential = New-Object PSCredential($username, $password)
     ### Import the necessary modules
     Import-DscResource -Module PsDesiredStateConfiguration
     Import-DscResource -ModuleName ComputerManagementDsc -ModuleVersion 8.5.0
@@ -48,4 +43,4 @@ $cd = @{
 
 
 
-Genesis -ConfigurationData $cd
+Genesis_newForest -ConfigurationData $cd
