@@ -1,11 +1,11 @@
 Configuration NewForest
 {
     ### AD Credentials from AWS SSM Parameters ###
-    $domain   = '{ssmtag:domainName}'
-    $username = '{ssmtag:domainJoinUsername}'
-    $password = '{ssmtag:domainJoinPassword}' | ConvertTo-SecureString -AsPlainText -Force
+    $domain   = "{ssmtag:domainName}"
+    $username = "{ssmtag:domainJoinUsername}"
+    $password = "{ssmtag:domainJoinPassword}" | ConvertTo-SecureString -AsPlainText -Force
     $credential = New-Object PSCredential($username, $password)
-    $safemode = New-Object PSCredential('dummy', $password)
+    $safemode = New-Object PSCredential("dummy", $password)
 
 
 
@@ -13,18 +13,18 @@ Configuration NewForest
     Import-DscResource -ModuleName PsDesiredStateConfiguration
     Import-DscResource -ModuleName ActiveDirectoryDsc -ModuleVersion 6.0.1
     Import-DscResource -ModuleName ComputerManagementDsc
-    node 'localhost'
+    node "localhost"
     {
-        WindowsFeature 'ADDS'
+        WindowsFeature "ADDS"
         {
-            Name   = 'AD-Domain-Services'
-            Ensure = 'Present'
+            Name   = "AD-Domain-Services"
+            Ensure = "Present"
         }
 
-        WindowsFeature 'RSAT'
+        WindowsFeature "RSAT"
         {
-            Name   = 'RSAT-AD-PowerShell'
-            Ensure = 'Present'
+            Name   = "RSAT-AD-PowerShell"
+            Ensure = "Present"
         }
 
         ADDomain $domain
@@ -32,12 +32,12 @@ Configuration NewForest
             DomainName                    = $domain
             Credential                    = $credential
             SafemodeAdministratorPassword = $safemode
-            ForestMode                    = 'WinThreshold'
+            ForestMode                    = "WinThreshold"
         }
 
         PendingReboot RebootAfterForest
         {
-            Name = 'ForestCreation'
+            Name = "ForestCreation"
         }
     }
 }
@@ -46,7 +46,7 @@ Configuration NewForest
     $cd = @{
     AllNodes = @(
         @{
-            NodeName = 'localhost'
+            NodeName = "localhost"
             PSDscAllowPlainTextPassword = $true
             PSDscAllowDomainUser = $true
         }
