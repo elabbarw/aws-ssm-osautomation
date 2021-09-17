@@ -10,7 +10,7 @@ Configuration NewForest
     ### Import the necessary modules
     Import-DscResource -ModuleName PsDesiredStateConfiguration
     Import-DscResource -ModuleName ActiveDirectoryDsc -ModuleVersion 6.0.1
-
+    Import-DscResource -ModuleName ComputerManagementDsc
     node 'localhost'
     {
         WindowsFeature 'ADDS'
@@ -31,6 +31,11 @@ Configuration NewForest
             Credential                    = $credential
             SafemodeAdministratorPassword = $credential
             ForestMode                    = 'WinThreshold'
+        }
+
+        PendingReboot RebootAfterForest
+        {
+            Name = 'ForestCreation'
         }
     }
 }
