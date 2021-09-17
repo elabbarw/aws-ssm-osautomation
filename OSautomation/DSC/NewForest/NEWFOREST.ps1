@@ -6,6 +6,7 @@ Configuration NewForest
     $password = "{ssmtag:domainJoinPassword}" | ConvertTo-SecureString -AsPlainText -Force
     $credential = New-Object PSCredential($username, $password)
 
+
     ### Import the necessary modules
     Import-DscResource -ModuleName PsDesiredStateConfiguration
     Import-DscResource -ModuleName ActiveDirectoryDsc -ModuleVersion 6.0.1
@@ -28,7 +29,7 @@ Configuration NewForest
         {
             DomainName                    = $domain
             Credential                    = $credential
-            SafemodeAdministratorPassword = $password
+            SafemodeAdministratorPassword = $credential
             ForestMode                    = 'WinThreshold'
         }
     }
