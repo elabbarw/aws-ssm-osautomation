@@ -8,11 +8,9 @@ Configuration Genesis_newForest
     Node localhost
     {
         ### Join the domain with the name taken from the Name tag and set the description of the VM to match the Purpose tag
-        Computer RenameAndJoin {
+        Computer Rename {
             Name = '{ssmtag:Name}'
-            DomainName = $domain
             Description = '{ssmtag:Purpose}'
-            Credential = $credential
         }
         PendingReboot RebootAfterDomainJoin
         {
