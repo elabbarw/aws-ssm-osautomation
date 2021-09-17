@@ -9,8 +9,8 @@ Configuration Genesis_newForest
     {
         ### Join the domain with the name taken from the Name tag and set the description of the VM to match the Purpose tag
         Computer Rename {
-            Name = '{ssmtag:Name}'
-            Description = '{ssmtag:Purpose}'
+            Name = '{tag:Name}'
+            Description = '{tag:Purpose}'
         }
         PendingReboot RebootAfterDomainJoin
         {
