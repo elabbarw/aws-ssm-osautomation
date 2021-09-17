@@ -1,10 +1,8 @@
 Configuration DomainController
 {
     ### AD Credentials from AWS SSM Parameters ###
-    $domain = "{ssmtag:domainname}"
-    $username = "{ssmtag:domainusername}"
-    $password = "{ssmtag:domainpassword}" | ConvertTo-SecureString -AsPlainText -Force
-    $credential = New-Object PSCredential($username, $password)
+    $domain   = "{ssm:domainName}"
+    $credential = New-Object PSCredential("domaincreds", (ConvertTo-SecureString "DoesntMatter" -AsPlainText -Force))
 
     ### Import the necessary modules
     Import-DscResource -ModuleName PsDesiredStateConfiguration

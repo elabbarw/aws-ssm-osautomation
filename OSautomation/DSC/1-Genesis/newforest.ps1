@@ -7,6 +7,11 @@ Configuration Genesis_newForest
 
     Node localhost
     {
+        ### Set system locale
+        SystemLocale SetLocale {
+            IsSingleInstance = 'Yes'
+            SystemLocale     = 'en-GB'
+        }
         ### Join the domain with the name taken from the Name tag and set the description of the VM to match the Purpose tag
         Computer Rename {
             Name = '{tag:Name}'
@@ -16,11 +21,7 @@ Configuration Genesis_newForest
         {
             Name = 'DomainJoin'
         }
-        ### Set system locale
-        SystemLocale SetLocale {
-            IsSingleInstance = 'Yes'
-            SystemLocale     = 'en-GB'
-        }
+
 
 
 
