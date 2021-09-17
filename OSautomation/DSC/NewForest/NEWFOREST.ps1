@@ -5,7 +5,6 @@ Configuration NewForest
     $username = "{ssmtag:domainJoinUsername}"
     $password = "{ssmtag:domainJoinPassword}" | ConvertTo-SecureString -AsPlainText -Force
     $credential = New-Object PSCredential($username, $password)
-    $safemode = New-Object PSCredential("dummy", $password)
 
 
 
@@ -31,7 +30,7 @@ Configuration NewForest
         {
             DomainName                    = $domain
             Credential                    = $credential
-            SafemodeAdministratorPassword = $safemode
+            SafemodeAdministratorPassword = $credential
             ForestMode                    = "WinThreshold"
         }
 
