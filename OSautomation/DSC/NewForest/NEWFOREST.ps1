@@ -2,9 +2,7 @@ Configuration NewForest
 {
     ### AD Credentials from AWS SSM Parameters ###
     $domain   = "{ssm:domainName}"
-    $username = "{ssm:domainJoinUsername}" | ConvertTo-SecureString -AsPlainText -Force
-    $password = "{ssm:domainJoinPassword}" | ConvertTo-SecureString -AsPlainText -Force
-    $credential = New-Object PSCredential($username, $password)
+    $credential = New-Object PSCredential("domaincreds", (ConvertTo-SecureString "DoesntMatter" -AsPlainText -Force))
 
 
 
