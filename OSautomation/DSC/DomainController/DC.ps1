@@ -2,6 +2,7 @@ Configuration DomainController
 {
     ### AD Credentials from AWS SSM Parameters ###
     $domain   = "{ssm:domainName}"
+    ### The PSCredential object in AWS SSM uses the username as the secret/param id so it can look up the values, the password in the object is not important in this case
     $credential = New-Object PSCredential("domaincreds", (ConvertTo-SecureString "DoesntMatter" -AsPlainText -Force))
 
     ### Import the necessary modules
@@ -10,6 +11,7 @@ Configuration DomainController
 
     Node localhost
     {
+
         WindowsFeature 'InstallADDomainServicesFeature'
         {
             Ensure = 'Present'
