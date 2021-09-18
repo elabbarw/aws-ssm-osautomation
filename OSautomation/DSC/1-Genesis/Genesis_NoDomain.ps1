@@ -1,5 +1,5 @@
 
-Configuration Genesis_newForest
+Configuration Genesis_NoDomain
 {
     ### Import the necessary modules
     Import-DscResource -Module PsDesiredStateConfiguration
@@ -42,4 +42,4 @@ $cd = @{
 
 
 
-Genesis_newForest -ConfigurationData $cd
+Genesis_NoDomain -ConfigurationData $cd
